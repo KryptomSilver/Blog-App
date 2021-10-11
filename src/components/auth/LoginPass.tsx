@@ -1,19 +1,26 @@
 import React, { useState } from "react";
-import { InputChange } from "../../interfaces/interfaces";
+import { useDispatch } from "react-redux";
+import { FormSubmit, InputChange } from "../../interfaces/interfaces";
+import { login } from "../../redux/actions/authActions";
 
 const LoginPass = () => {
-  const [login, setlogin] = useState({
+  const [userLogin, setlogin] = useState({
     account: "",
     password: "",
   });
   const [typePass, setTypePass] = useState(false);
-  const { password, account } = login;
+  const dispatch = useDispatch();
+  const { password, account } = userLogin;
   const handleChanngeInput = (e: InputChange) => {
     const { value, name } = e.target;
-    setlogin({ ...login, [name]: value });
+    setlogin({ ...userLogin, [name]: value });
+  };
+  const handleSubmit = (e: FormSubmit) => {
+    e.preventDefault();
+    dispatch(login(userLogin));
   };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-group mb-3">
         <label htmlFor="account" className="form-label">
           Email / Phone Number
