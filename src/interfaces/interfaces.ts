@@ -1,8 +1,10 @@
 import { ChangeEvent, FormEvent } from "react";
-import { AUTH } from "../redux/types";
+import { ALERT, AUTH } from "../redux/types";
+import rootReducer from "../redux/reducers/index";
 
 export type InputChange = ChangeEvent<HTMLInputElement>;
 export type FormSubmit = FormEvent<HTMLFormElement>;
+export type RootStore = ReturnType<typeof rootReducer>;
 
 export interface IParams {
   page: string;
@@ -28,4 +30,18 @@ export interface IAuth {
 export interface IAuthType {
   type: typeof AUTH;
   payload: IAuth;
+}
+export interface IAlert {
+  loading?: boolean;
+  success?: string | string[];
+  errors?: string | string[];
+}
+export interface IAlertType {
+  type: typeof ALERT;
+  payload: IAlert;
+}
+export interface IProps {
+  title: string
+  body: string | string[]
+  bgColor: string
 }
