@@ -1,6 +1,12 @@
 import { Dispatch } from "react";
 import { postAPI } from "../../helpers/FetchData";
-import { IAlertType, IAuthType, IUserLogin } from "../../interfaces/interfaces";
+import { validRegister } from "../../helpers/Valid";
+import {
+  IAlertType,
+  IAuthType,
+  IUserLogin,
+  IUserRegister,
+} from "../../interfaces/interfaces";
 import { ALERT, AUTH } from "../types";
 
 export const login =
@@ -16,7 +22,23 @@ export const login =
           user: res.data.user,
         },
       });
-      dispatch({ type: ALERT, payload: { success: "Login Success!" } });
+      dispatch({ type: ALERT, payload: { success: res.data.msg } });
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
+export const register =
+  (userRegister: IUserRegister) =>
+  async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+    const check = validRegister(userRegister);
+    if (check.errLenght > 0) {
+      return dispatch({ type: ALERT, payload: { errors: check.errMsg } });
+    }
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      const res: any = await postAPI("register", userRegister);
+
+      dispatch({ type: ALERT, payload: { success: res.data.msg } });
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
     }
