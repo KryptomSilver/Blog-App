@@ -28,6 +28,7 @@ export interface IUser extends IUserLogin {
   updatedAt: string;
 }
 export interface IAuth {
+  msg?: string;
   token?: string;
   user?: IUser;
 }
