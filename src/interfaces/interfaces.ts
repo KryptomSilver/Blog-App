@@ -14,6 +14,10 @@ export interface IUserLogin {
   account: string;
   password: string;
 }
+export interface IUserRegister extends IUserLogin {
+  name: string;
+  cf_password: string;
+}
 export interface IUser extends IUserLogin {
   _id: string;
   avatar: string;
@@ -41,7 +45,7 @@ export interface IAlertType {
   payload: IAlert;
 }
 export interface IProps {
-  title: string
-  body: string | string[]
-  bgColor: string
+  title: string;
+  body: string | string[];
+  bgColor: string;
 }
