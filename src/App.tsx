@@ -11,7 +11,7 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(refreshToken());
-  }, []);
+  }, [dispatch]);
   return (
     <div className="container">
       <Router>
