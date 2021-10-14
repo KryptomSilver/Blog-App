@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { postAPI } from "../../helpers/FetchData";
+import { postAPI, getAPI } from "../../helpers/FetchData";
 import { validRegister } from "../../helpers/Valid";
 import {
   IAlertType,
@@ -17,9 +17,10 @@ export const login =
       const res: any = await postAPI("login", userLogin);
       dispatch({
         type: AUTH,
-        payload: res.data
+        payload: res.data,
       });
       dispatch({ type: ALERT, payload: { success: res.data.msg } });
+      localStorage.setItem("logged", "true");
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
     }
@@ -36,6 +37,33 @@ export const register =
       const res: any = await postAPI("register", userRegister);
 
       dispatch({ type: ALERT, payload: { success: res.data.msg } });
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
+export const refreshToken =
+  () => async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+    const logged = localStorage.getItem("logged");
+    if (logged !== "true") return;
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      const res: any = await getAPI("refresh_token");
+      dispatch({
+        type: AUTH,
+        payload: res.data,
+      });
+
+      dispatch({ type: ALERT, payload: {} });
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
+export const logout =
+  () => async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+    try {
+      localStorage.removeItem("logged");
+      await getAPI("logout");
+      window.location.href = "/";
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
     }
