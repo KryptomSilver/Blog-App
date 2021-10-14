@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Alert from "./components/alert/Alert";
+import { Alert } from "./components/alert/Alert";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PageRender from "./PageRender";
