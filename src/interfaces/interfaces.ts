@@ -29,7 +29,7 @@ export interface IUser extends IUserLogin {
 }
 export interface IAuth {
   msg?: string;
-  token?: string;
+  access_token?: string;
   user?: IUser;
 }
 export interface IAuthType {
