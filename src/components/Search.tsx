@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Search = () => {
   const [search, setSearch] = useState("");
   return (
-    <div className="search w-100 position-relative">
+    <div className="search w-100 position-relative me-4">
       <input
         type="text"
         value={search}
