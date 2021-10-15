@@ -1,9 +1,17 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { FormSubmit } from "../../interfaces/interfaces";
+import { loginSMS } from "../../redux/actions/authActions";
 
 const LoginSMS = () => {
   const [phone, setPhone] = useState("");
+  const dispatch = useDispatch()
+  const handleSubmit = (e: FormSubmit) => {
+    e.preventDefault();
+    dispatch(loginSMS(phone))
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-group mb-3">
         <label htmlFor="phone" className="form-label">
           Phone number
@@ -15,6 +23,7 @@ const LoginSMS = () => {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           className="form-control"
+          placeholder="+523121231212"
         />
       </div>
       <button
