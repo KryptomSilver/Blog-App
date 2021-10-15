@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { postAPI, getAPI } from "../../helpers/FetchData";
-import { validRegister } from "../../helpers/Valid";
+import { validatePhone, validRegister } from "../../helpers/Valid";
 import {
   IAlertType,
   IAuthType,
@@ -83,3 +83,40 @@ export const googleLogin =
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
     }
   };
+export const loginSMS =
+  (phone: string) => async (dispatch: Dispatch<IAuthType | IAlertType>) => {
+    const checkPhone = validatePhone(phone);
+    if (!checkPhone)
+      return dispatch({
+        type: ALERT,
+        payload: { errors: "Phone numbre format is incorrect" },
+      });
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      const res: any = await postAPI("sms_login", { phone });
+      if (!res.data.verify) {
+        verifySMS(phone, dispatch);
+      }
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
+const verifySMS = async (
+  phone: string,
+  dispatch: Dispatch<IAuthType | IAlertType>
+) => {
+  const code = prompt("Enter your code");
+  if (!code) return;
+  try {
+    dispatch({ type: ALERT, payload: { loading: true } });
+    const res: any = await postAPI("sms_verify", { phone, code });
+    dispatch({
+      type: AUTH,
+      payload: res.data,
+    });
+    dispatch({ type: ALERT, payload: { success: res.data.msg } });
+    localStorage.setItem("logged", "true");
+  } catch (error: any) {
+    dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+  }
+};
