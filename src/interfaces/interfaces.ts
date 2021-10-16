@@ -27,6 +27,9 @@ export interface IUser extends IUserLogin {
   type: string;
   updatedAt: string;
 }
+export interface IUserInfo extends IUserRegister {
+  avatar: string | File;
+}
 export interface IAuth {
   msg?: string;
   access_token?: string;
