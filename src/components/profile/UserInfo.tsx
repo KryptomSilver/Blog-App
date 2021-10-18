@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { InputChange, IUserInfo, RootStore } from "../../interfaces/interfaces";
+import {
+  FormSubmit,
+  InputChange,
+  IUserInfo,
+  RootStore,
+} from "../../interfaces/interfaces";
+import { updateUser } from "../../redux/actions/profileActions";
 import { NotFound } from "../NotFound";
 
 const UserInfo = () => {
@@ -27,18 +33,20 @@ const UserInfo = () => {
   const handleChangeFile = (e: InputChange) => {
     const target = e.target as HTMLInputElement;
     const files = target.files;
-
     if (files) {
       const file = files[0];
       setUser({ ...user, avatar: file });
     }
   };
-
+  const handleSubmit = (e: FormSubmit) => {
+    e.preventDefault();
+    if (name || avatar) dispatch(updateUser(avatar as File, name, auth));
+  };
   const { name, account, avatar, password, cf_password } = user;
 
   if (!auth.user) return <NotFound />;
   return (
-    <form className="profile_info">
+    <form className="profile_info" onSubmit={handleSubmit}>
       <div className="info_avatar">
         <img
           src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
