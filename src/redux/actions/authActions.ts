@@ -1,4 +1,4 @@
-import { Dispatch } from "react";
+import { Dispatch } from "redux";
 import { postAPI, getAPI } from "../../helpers/FetchData";
 import { validatePhone, validRegister } from "../../helpers/Valid";
 import {
