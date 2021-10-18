@@ -1,0 +1,45 @@
+import { Dispatch } from "redux";
+import { patchAPI } from "../../helpers/FetchData";
+import { checkImage, imageUpload } from "../../helpers/ImageUpload";
+import { IAlertType, IAuth, IAuthType } from "../../interfaces/interfaces";
+import { ALERT, AUTH } from "../types";
+
+export const updateUser =
+  (avatar: File, name: string, auth: IAuth) =>
+  async (dispatch: Dispatch<IAuthType | IAlertType | IAuthType>) => {
+    if (!auth.access_token || !auth.user) return;
+    let url = "";
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      if (avatar) {
+        const check = checkImage(avatar);
+        if (check) {
+          return dispatch({ type: ALERT, payload: { errors: check } });
+        }
+        const photo = await imageUpload(avatar);
+        url = photo.url;
+      }
+      dispatch({
+        type: AUTH,
+        payload: {
+          access_token: auth.access_token,
+          user: {
+            ...auth.user,
+            avatar: url ? url : auth.user.avatar,
+            name: name ? name : auth.user.name,
+          },
+        },
+      });
+      const res: any = await patchAPI(
+        "user",
+        {
+          avatar: url ? url : auth.user.avatar,
+          name: name ? name : auth.user.name,
+        },
+        auth.access_token
+      );
+      dispatch({ type: ALERT, payload: { success: res.data.msg } });
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
