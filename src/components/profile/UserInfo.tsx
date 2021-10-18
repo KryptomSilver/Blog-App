@@ -6,7 +6,7 @@ import {
   IUserInfo,
   RootStore,
 } from "../../interfaces/interfaces";
-import { updateUser } from "../../redux/actions/profileActions";
+import { resetPassword, updateUser } from "../../redux/actions/profileActions";
 import { NotFound } from "../NotFound";
 
 const UserInfo = () => {
@@ -41,8 +41,10 @@ const UserInfo = () => {
   const handleSubmit = (e: FormSubmit) => {
     e.preventDefault();
     if (name || avatar) dispatch(updateUser(avatar as File, name, auth));
+    if (password && auth.access_token)
+      dispatch(resetPassword(password, cf_password, auth.access_token));
   };
-  const { name, account, avatar, password, cf_password } = user;
+  const { name, avatar, password, cf_password } = user;
 
   if (!auth.user) return <NotFound />;
   return (
@@ -52,7 +54,6 @@ const UserInfo = () => {
           src={avatar ? URL.createObjectURL(avatar) : auth.user.avatar}
           alt="avatar"
         />
-
         <span>
           <i className="fas fa-camera" />
           <p>Change</p>
@@ -91,9 +92,14 @@ const UserInfo = () => {
         />
       </div>
 
+      {auth.user.type !== "register" && (
+        <small className="text-danger">
+          * Quick login account with {auth.user.type} can't use this function *
+        </small>
+      )}
+
       <div className="form-group my-3">
         <label htmlFor="password">Password</label>
-
         <div className="pass">
           <input
             type={typePass ? "text" : "password"}
@@ -102,8 +108,8 @@ const UserInfo = () => {
             name="password"
             value={password}
             onChange={handleChangeInput}
+            disabled={auth.user.type !== "register"}
           />
-
           <small onClick={() => setTypePass(!typePass)}>
             {typePass ? "Hide" : "Show"}
           </small>
@@ -112,7 +118,6 @@ const UserInfo = () => {
 
       <div className="form-group my-3">
         <label htmlFor="cf_password">Confirm Password</label>
-
         <div className="pass">
           <input
             type={typeCfPass ? "text" : "password"}
@@ -121,8 +126,8 @@ const UserInfo = () => {
             name="cf_password"
             value={cf_password}
             onChange={handleChangeInput}
+            disabled={auth.user.type !== "register"}
           />
-
           <small onClick={() => setTypeCfPass(!typeCfPass)}>
             {typeCfPass ? "Hide" : "Show"}
           </small>
