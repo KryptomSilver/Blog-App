@@ -1,12 +1,13 @@
 import { Dispatch } from "redux";
 import { patchAPI } from "../../helpers/FetchData";
 import { checkImage, imageUpload } from "../../helpers/ImageUpload";
+import { checkPassword } from "../../helpers/Valid";
 import { IAlertType, IAuth, IAuthType } from "../../interfaces/interfaces";
 import { ALERT, AUTH } from "../types";
 
 export const updateUser =
   (avatar: File, name: string, auth: IAuth) =>
-  async (dispatch: Dispatch<IAuthType | IAlertType | IAuthType>) => {
+  async (dispatch: Dispatch<IAuthType | IAlertType>) => {
     if (!auth.access_token || !auth.user) return;
     let url = "";
     try {
@@ -38,6 +39,20 @@ export const updateUser =
         },
         auth.access_token
       );
+      dispatch({ type: ALERT, payload: { success: res.data.msg } });
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
+
+export const resetPassword =
+  (password: string, cf_password: string, token: string) =>
+  async (dispatch: Dispatch<IAlertType | IAuthType>) => {
+    const msg = checkPassword(password, cf_password);
+    if (msg) return dispatch({ type: ALERT, payload: { errors: msg } });
+    try {
+      dispatch({ type: ALERT, payload: { loading: true } });
+      const res: any = await patchAPI("reset_password", { password }, token);
       dispatch({ type: ALERT, payload: { success: res.data.msg } });
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
