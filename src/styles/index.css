@@ -6,6 +6,8 @@
 @import url(./alert.css);
 /* --- Profile --- */
 @import url(./profile.css);
+/* --- Category --- */
+@import url(./category.css);
 .avatar {
   width: 30px;
   height: 30px;
