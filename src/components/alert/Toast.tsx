@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { IProps } from "../../interfaces/interfaces";
-import { ALERT } from "../../redux/types";
+import { ALERT } from "../../redux/types/alertType";
 
 const Toast = ({ title, body, bgColor }: IProps) => {
   const dispatch = useDispatch();
