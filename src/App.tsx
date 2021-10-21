@@ -6,11 +6,13 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PageRender from "./PageRender";
 import { refreshToken } from "./redux/actions/authActions";
+import { getCategories } from "./redux/actions/categoryActions";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(refreshToken());
+    dispatch(getCategories());
   }, [dispatch]);
   return (
     <div className="container">
