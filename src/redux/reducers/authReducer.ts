@@ -1,5 +1,6 @@
-import { IAuth, IAuthType } from "../../interfaces/interfaces";
-import { AUTH } from "../types";
+import { IAuth } from "../../interfaces/interfaces";
+import { AUTH, IAuthType } from "../types/authType";
+
 
 const authReducer = (state: IAuth = {}, action: IAuthType): IAuth => {
   switch (action.type) {

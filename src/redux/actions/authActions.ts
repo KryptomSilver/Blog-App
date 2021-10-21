@@ -1,13 +1,9 @@
 import { Dispatch } from "redux";
 import { postAPI, getAPI } from "../../helpers/FetchData";
 import { validatePhone, validRegister } from "../../helpers/Valid";
-import {
-  IAlertType,
-  IAuthType,
-  IUserLogin,
-  IUserRegister,
-} from "../../interfaces/interfaces";
-import { ALERT, AUTH } from "../types";
+import { IUserLogin, IUserRegister } from "../../interfaces/interfaces";
+import { ALERT, IAlertType } from "../types/alertType";
+import { AUTH, IAuthType } from "../types/authType";
 
 export const login =
   (userLogin: IUserLogin) =>

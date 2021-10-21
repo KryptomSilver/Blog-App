@@ -2,8 +2,10 @@ import { Dispatch } from "redux";
 import { patchAPI } from "../../helpers/FetchData";
 import { checkImage, imageUpload } from "../../helpers/ImageUpload";
 import { checkPassword } from "../../helpers/Valid";
-import { IAlertType, IAuth, IAuthType } from "../../interfaces/interfaces";
-import { ALERT, AUTH } from "../types";
+import { IAuth } from "../../interfaces/interfaces";
+import { ALERT, IAlertType } from "../types/alertType";
+import { AUTH, IAuthType } from "../types/authType";
+
 
 export const updateUser =
   (avatar: File, name: string, auth: IAuth) =>

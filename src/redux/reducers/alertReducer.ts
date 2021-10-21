@@ -1,5 +1,6 @@
-import { IAlert, IAlertType } from "../../interfaces/interfaces";
-import { ALERT } from "../types";
+import { IAlert } from "../../interfaces/interfaces";
+import { ALERT, IAlertType } from "../types/alertType";
+
 
 const alertReducer = (state: IAlert = {}, action: IAlertType): IAlert => {
   switch (action.type) {
