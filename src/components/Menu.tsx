@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { RootStore } from "../interfaces/interfaces";
 import { logout } from "../redux/actions/authActions";
 
 const Menu = () => {
   const { auth } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const bfLoginLinks = [
     { label: "Login", path: "/login" },
     { label: "Register", path: "/register" },
@@ -15,16 +16,26 @@ const Menu = () => {
     { label: "Home", path: "/" },
     { label: "CreateBlog", path: "/create_blog" },
   ];
+  const isActive = (pn: string) => {
+    if (pn === pathname) return "active";
+  };
   const navLinks = auth.access_token ? afLoginLinks : bfLoginLinks;
   return (
     <ul className="navbar-nav ms-auto">
       {navLinks.map((link, index) => (
-        <li className="nav-item" key={index}>
-          <NavLink className="nav-link" activeClassName="active" to={link.path}>
+        <li className={`nav-item ${isActive(link.path)}`} key={index}>
+          <Link className="nav-link" to={link.path}>
             {link.label}
-          </NavLink>
+          </Link>
         </li>
       ))}
+      {auth.user?.role === "admin" && (
+        <li className={`nav-item ${isActive("/category")}`}>
+          <Link className="nav-link" to="/category">
+            Category
+          </Link>
+        </li>
+      )}
       {auth.user && (
         <li className="nav-item dropdown">
           <span
