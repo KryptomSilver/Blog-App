@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent } from "react";
-import { ALERT, AUTH } from "../redux/types";
 import rootReducer from "../redux/reducers/index";
 
 export type InputChange = ChangeEvent<HTMLInputElement>;
@@ -30,26 +29,24 @@ export interface IUser extends IUserLogin {
 export interface IUserInfo extends IUserRegister {
   avatar: string | File;
 }
+export interface IProps {
+  title: string;
+  body: string | string[];
+  bgColor: string;
+}
+export interface ICategory {
+  createdAt: string;
+  name: string;
+  updatedAt: string;
+  _id: string;
+}
 export interface IAuth {
   msg?: string;
   access_token?: string;
   user?: IUser;
 }
-export interface IAuthType {
-  type: typeof AUTH;
-  payload: IAuth;
-}
 export interface IAlert {
   loading?: boolean;
   success?: string | string[];
   errors?: string | string[];
-}
-export interface IAlertType {
-  type: typeof ALERT;
-  payload: IAlert;
-}
-export interface IProps {
-  title: string;
-  body: string | string[];
-  bgColor: string;
 }
