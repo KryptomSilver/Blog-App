@@ -49,7 +49,7 @@ export const refreshToken =
         payload: res.data,
       });
 
-      dispatch({ type: ALERT, payload: {} });
+      dispatch({ type: ALERT, payload: { loading: false } });
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
     }

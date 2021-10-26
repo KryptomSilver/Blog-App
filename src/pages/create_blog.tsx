@@ -4,6 +4,7 @@ import CardHoriz from "../components/cards/CardHoriz";
 import CreateForm from "../components/cards/CreateForm";
 import { NotFound } from "../components/NotFound";
 import { IBlog, RootStore } from "../interfaces/interfaces";
+import ReactQuill from "../components/editor/ReactQuill";
 
 const CreateBlog = () => {
   const initialState = {
@@ -16,6 +17,7 @@ const CreateBlog = () => {
     createdAt: new Date().toISOString(),
   };
   const [blog, setBlog] = useState<IBlog>(initialState);
+  const [body, setBody] = useState("");
   const { auth, categories } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
   if (!auth.access_token) return <NotFound />;
@@ -32,6 +34,10 @@ const CreateBlog = () => {
           <CardHoriz blog={blog} />
         </div>
       </div>
+        <ReactQuill setBody={setBody} />
+        <button className="btn btn-dark mt-3 d-block mx-auto">
+          Crete Post
+        </button>
     </div>
   );
 };
