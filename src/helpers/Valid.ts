@@ -1,4 +1,4 @@
-import { IUserRegister } from "../interfaces/interfaces";
+import { IBlog, IUserRegister } from "../interfaces/interfaces";
 
 export const validRegister = ({
   name,
@@ -39,4 +39,36 @@ export const validateEmail = (email: string) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
+};
+export const validateBlog = ({
+  title,
+  content,
+  description,
+  thumbnail,
+  category,
+}: IBlog) => {
+  const errors: string[] = [];
+  if (title.trim().length < 10) {
+    errors.push("Title has at lest 10 characters.");
+  } else if (title.trim().length > 50) {
+    errors.push("Title is up to 50 characters long.");
+  }
+  if (content.trim().length < 2000) {
+    errors.push("Content has at lest 2000 characters.");
+  }
+  if (description.trim().length < 50) {
+    errors.push("Description has at lest 50 characters.");
+  } else if (description.trim().length > 200) {
+    errors.push("Description is up to 200 characters long.");
+  }
+  if (!thumbnail) {
+    errors.push("Thumbanail cannot be left blank.");
+  }
+  if (!category) {
+    errors.push("Category cannot be left blank.");
+  }
+  return {
+    errMsg: errors,
+    errLenght: errors.length,
+  };
 };
