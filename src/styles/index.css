@@ -8,6 +8,8 @@
 @import url(./profile.css);
 /* --- Category --- */
 @import url(./category.css);
+/* --- Home --- */
+@import url(./home.css);
 .avatar {
   width: 30px;
   height: 30px;
