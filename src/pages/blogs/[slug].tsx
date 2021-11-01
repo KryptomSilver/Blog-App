@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import CardVert from "../../components/cards/CardVert";
-import { NotFound } from "../../components/NotFound";
+import Loading from "../../components/Loading";
+import Pagination from "../../components/Pagination";
 import { IBlog, IParams, RootStore } from "../../interfaces/interfaces";
-import { getBlogsById } from "../../redux/actions/blogActions";
+import { getBlogsByCategoryId } from "../../redux/actions/blogActions";
 
 const BlogsByCategory = () => {
   const { categories, blogsCategory } = useSelector(
@@ -15,6 +16,8 @@ const BlogsByCategory = () => {
   const [blogs, setBlogs] = useState<IBlog[]>([]);
   const [total, setTotal] = useState(0);
   const dispatch = useDispatch();
+  const history = useHistory();
+  const { search } = history.location;
   useEffect(() => {
     const category = categories.find((category) => category.name === slug);
     if (category) setCategoryId(category._id);
@@ -22,15 +25,20 @@ const BlogsByCategory = () => {
   useEffect(() => {
     if (!categoryId) return;
     if (blogsCategory.every((blog) => blog.id !== categoryId)) {
-      dispatch(getBlogsById(categoryId));
+      dispatch(getBlogsByCategoryId(categoryId, search));
     } else {
       const data = blogsCategory.find((blog) => blog.id === categoryId);
       if (!data) return;
       setBlogs(data.blogs);
       setTotal(data.total);
+      if (data.search) history.push(data.search);
     }
-  }, [categoryId, blogsCategory]);
-  if (!blogs) return <NotFound />;
+  }, [categoryId, blogsCategory, dispatch, search, history]);
+  const handlePagination = (page: number) => {
+    const search = `?page=${page}`;
+    dispatch(getBlogsByCategoryId(categoryId, search));
+  };
+  if (!blogs) return <Loading />;
   return (
     <div className="blogs_category">
       <div className="show_blogs">
@@ -38,6 +46,7 @@ const BlogsByCategory = () => {
           <CardVert key={blog._id} blog={blog} />
         ))}
       </div>
+      {total > 1 && <Pagination total={total} callback={handlePagination} />}
     </div>
   );
 };
