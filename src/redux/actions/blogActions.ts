@@ -39,13 +39,18 @@ export const getBlogs =
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
     }
   };
-export const getBlogsById =
-  (id: string) =>
+export const getBlogsByCategoryId =
+  (id: string, search: string) =>
   async (dispatch: Dispatch<IAlertType | IGetBlogsCategoryType>) => {
     try {
+      const limit = 4;
+      const value = search ? search : `?page=${1}`;
       dispatch({ type: ALERT, payload: { loading: true } });
-      const res: any = await getAPI(`blog/${id}`);
-      dispatch({ type: GET_BLOGS_BY_CATEGORY, payload: { ...res.data, id } });
+      const res: any = await getAPI(`blog/${id}${value}&limit=${limit}`);
+      dispatch({
+        type: GET_BLOGS_BY_CATEGORY,
+        payload: { ...res.data, id, search },
+      });
       dispatch({ type: ALERT, payload: { loading: false } });
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
