@@ -6,8 +6,10 @@ import { ALERT, IAlertType } from "../types/alertType";
 import {
   GET_BLOGS,
   GET_BLOGS_BY_CATEGORY,
+  GET_BLOGS_BY_USER_ID,
   IGetBlogsCategoryType,
   IGetBlogsType,
+  IGetBlogsUserType,
 } from "../types/blogType";
 
 export const createBlog =
@@ -46,9 +48,28 @@ export const getBlogsByCategoryId =
       const limit = 4;
       const value = search ? search : `?page=${1}`;
       dispatch({ type: ALERT, payload: { loading: true } });
-      const res: any = await getAPI(`blog/${id}${value}&limit=${limit}`);
+      const res: any = await getAPI(
+        `blog/category/${id}${value}&limit=${limit}`
+      );
       dispatch({
         type: GET_BLOGS_BY_CATEGORY,
+        payload: { ...res.data, id, search },
+      });
+      dispatch({ type: ALERT, payload: { loading: false } });
+    } catch (error: any) {
+      dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });
+    }
+  };
+export const getBlogsByUserId =
+  (id: string, search: string) =>
+  async (dispatch: Dispatch<IAlertType | IGetBlogsUserType>) => {
+    try {
+      const limit = 3;
+      const value = search ? search : `?page=${1}`;
+      dispatch({ type: ALERT, payload: { loading: true } });
+      const res: any = await getAPI(`blog/user/${id}${value}&limit=${limit}`);
+      dispatch({
+        type: GET_BLOGS_BY_USER_ID,
         payload: { ...res.data, id, search },
       });
       dispatch({ type: ALERT, payload: { loading: false } });
