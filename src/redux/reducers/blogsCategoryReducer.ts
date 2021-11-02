@@ -4,7 +4,7 @@ import {
   IGetBlogsCategoryType,
 } from "../types/blogType";
 
-const BlogCategoryReducer = (
+const BlogsCategoryReducer = (
   state: IBlogsCategory[] = [],
   action: IGetBlogsCategoryType
 ): IBlogsCategory[] => {
@@ -22,4 +22,4 @@ const BlogCategoryReducer = (
   }
 };
 
-export default BlogCategoryReducer;
+export default BlogsCategoryReducer;
