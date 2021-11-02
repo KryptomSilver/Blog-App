@@ -7,7 +7,7 @@ import {
   RootStore,
 } from "../../interfaces/interfaces";
 import { resetPassword, updateUser } from "../../redux/actions/profileActions";
-import { NotFound } from "../NotFound";
+import { NotFound } from "../global/NotFound";
 
 const UserInfo = () => {
   const initState = {

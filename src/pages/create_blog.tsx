@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CardHoriz from "../components/cards/CardHoriz";
 import CreateForm from "../components/cards/CreateForm";
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../components/global/NotFound";
 import { FormSubmit, IBlog, RootStore } from "../interfaces/interfaces";
 import ReactQuill from "../components/editor/ReactQuill";
 import { validateBlog } from "../helpers/Valid";

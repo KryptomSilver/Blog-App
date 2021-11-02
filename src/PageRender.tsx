@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router";
-import { NotFound } from "./components/NotFound";
+import { NotFound } from "./components/global/NotFound";
 import { IParams } from "./interfaces/interfaces";
 
 const generatePage = (name: string) => {

@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CardVert from "../components/cards/CardVert";
-import Loading from "../components/Loading";
+import Loading from "../components/global/Loading";
 import { IBlog, RootStore } from "../interfaces/interfaces";
 
 const Home = () => {

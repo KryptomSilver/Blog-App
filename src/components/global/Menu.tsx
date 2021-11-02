@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { RootStore } from "../interfaces/interfaces";
-import { logout } from "../redux/actions/authActions";
+import { RootStore } from "../../interfaces/interfaces";
+import { logout } from "../../redux/actions/authActions";
 
 const Menu = () => {
   const { auth } = useSelector((state: RootStore) => state);

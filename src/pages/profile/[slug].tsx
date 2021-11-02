@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import OtherInfo from "../../components/profile/OtherInfo";
+import UserBlogs from "../../components/profile/UserBlogs";
 import UserInfo from "../../components/profile/UserInfo";
 import { IParams, RootStore } from "../../interfaces/interfaces";
 
@@ -11,10 +12,10 @@ const Profile = () => {
   return (
     <div className="row my-3">
       <div className="col-md-5 mb-3">
-        {auth.user?._id === slug ? <UserInfo /> : <OtherInfo />}
+        {auth.user?._id === slug ? <UserInfo /> : <OtherInfo id={slug} />}
       </div>
       <div className="col-md-7">
-        <h3>User Blogs</h3>
+        <UserBlogs />
       </div>
     </div>
   );

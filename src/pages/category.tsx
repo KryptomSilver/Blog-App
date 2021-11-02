@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NotFound } from "../components/NotFound";
+import { NotFound } from "../components/global/NotFound";
 import { FormSubmit, RootStore, ICategory } from "../interfaces/interfaces";
 import { createCategory, deleteCategory, updateCategory } from "../redux/actions/categoryActions";
 

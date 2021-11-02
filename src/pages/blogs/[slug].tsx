@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import CardVert from "../../components/cards/CardVert";
-import Loading from "../../components/Loading";
-import Pagination from "../../components/Pagination";
+import Loading from "../../components/global/Loading";
+import Pagination from "../../components/global/Pagination";
 import { IBlog, IParams, RootStore } from "../../interfaces/interfaces";
 import { getBlogsByCategoryId } from "../../redux/actions/blogActions";
 
