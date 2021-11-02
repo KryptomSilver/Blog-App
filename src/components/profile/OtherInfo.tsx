@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IUser, RootStore } from "../../interfaces/interfaces";
-import { getOtherInfo } from "../../redux/actions/profileActions";
+import { getOtherInfo } from "../../redux/actions/userActions";
 import Loading from "../global/Loading";
 
 interface IProps {

@@ -25,6 +25,7 @@ export const createBlog =
       }
       const newBlog = { ...blog, thumbnail: url };
       const res: any = await postAPI("blog", newBlog, token);
+      console.log(res)
       dispatch({ type: ALERT, payload: { loading: false } });
     } catch (error: any) {
       dispatch({ type: ALERT, payload: { errors: error.response.data.msg } });

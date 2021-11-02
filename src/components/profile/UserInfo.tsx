@@ -6,7 +6,7 @@ import {
   IUserInfo,
   RootStore,
 } from "../../interfaces/interfaces";
-import { resetPassword, updateUser } from "../../redux/actions/profileActions";
+import { resetPassword, updateUser } from "../../redux/actions/userActions";
 import { NotFound } from "../global/NotFound";
 
 const UserInfo = () => {
