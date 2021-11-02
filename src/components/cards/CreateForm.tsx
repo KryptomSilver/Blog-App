@@ -6,7 +6,7 @@ interface IProps {
   setBlog: (blog: IBlog) => void;
 }
 const CreateForm: React.FC<IProps> = ({ blog, setBlog }) => {
-  const { auth, categories } = useSelector((state: RootStore) => state);
+  const { categories } = useSelector((state: RootStore) => state);
   const handleChangeInput = (e: InputChange) => {
     const { name, value } = e.target;
     setBlog({ ...blog, [name]: value });

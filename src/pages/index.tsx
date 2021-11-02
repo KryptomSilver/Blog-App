@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import CardVert from "../components/cards/CardVert";
 import Loading from "../components/global/Loading";
-import { IBlog, RootStore } from "../interfaces/interfaces";
+import { RootStore } from "../interfaces/interfaces";
 
 const Home = () => {
   const { blogs } = useSelector((state: RootStore) => state);
@@ -32,7 +32,7 @@ const Home = () => {
           {item.count > 4 && (
             <Link
               to={`/blogs/${item.name}`}
-              className="text-right d-block my-2 mb-3"
+              className="text-right d-block my-2 mb-3 text-decoration-none"
             >
               Read More &gt;&gt;
             </Link>

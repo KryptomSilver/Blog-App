@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import CardHoriz from "../components/cards/CardHoriz";
 import CreateForm from "../components/cards/CreateForm";
 import { NotFound } from "../components/global/NotFound";
-import { FormSubmit, IBlog, RootStore } from "../interfaces/interfaces";
+import { IBlog, RootStore } from "../interfaces/interfaces";
 import ReactQuill from "../components/editor/ReactQuill";
 import { validateBlog } from "../helpers/Valid";
 import { ALERT } from "../redux/types/alertType";
-import { imageUpload } from "../helpers/ImageUpload";
 import { createBlog } from "../redux/actions/blogActions";
 
 const CreateBlog = () => {
@@ -24,7 +23,7 @@ const CreateBlog = () => {
   const [body, setBody] = useState("");
   const [text, setText] = useState("");
   const divRef = useRef<HTMLDivElement>(null);
-  const { auth, categories } = useSelector((state: RootStore) => state);
+  const { auth } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
   useEffect(() => {
     const div = divRef.current;
