@@ -12,6 +12,8 @@
 @import url(./home.css);
 /* --- Blogs Category --- */
 @import url(./blogs_category.css);
+/* --- Comments Category --- */
+@import url(./comments.css);
 .avatar {
   width: 30px;
   height: 30px;
