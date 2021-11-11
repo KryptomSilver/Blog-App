@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { IBlog, IComment, IUser, RootStore } from "../../interfaces/interfaces";
+import { createComment, getComments } from "../../redux/actions/commentActions";
+import Loading from "../global/Loading";
 import Comments from "../comments/Comments";
 import Input from "../comments/Input";
 
@@ -9,9 +11,10 @@ interface IProps {
   blog: IBlog;
 }
 const DisplayBlog: React.FC<IProps> = ({ blog }) => {
-  const { auth } = useSelector((state: RootStore) => state);
+  const { auth, comments } = useSelector((state: RootStore) => state);
   const dispatch = useDispatch();
   const [showComments, setShowComments] = useState<IComment[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleComment = (body: string) => {
     if (!auth.user || !auth.access_token) return;
@@ -21,10 +24,24 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
       user: auth.user,
       blog_id: blog._id as string,
       blog_user_id: (blog.user as IUser)._id,
-      createAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
     setShowComments([data, ...showComments]);
+    dispatch(createComment(data, auth.access_token));
   };
+  useEffect(() => {
+    setShowComments(comments.data);
+  }, [comments.data]);
+
+  const fetchComments = useCallback(async (id: string) => {
+    setLoading(true);
+    await dispatch(getComments(id));
+    setLoading(false);
+  }, []);
+  useEffect(() => {
+    if (!blog._id) return;
+    fetchComments(blog._id);
+  }, [blog._id]);
   return (
     <div>
       <h2
@@ -55,9 +72,13 @@ const DisplayBlog: React.FC<IProps> = ({ blog }) => {
           Please <Link to={`/login?blog/${blog._id}`}>login</Link> to comment.
         </h5>
       )}
-      {showComments?.map((comment: IComment, index) => (
-        <Comments key={index} comment={comment} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        showComments?.map((comment: IComment, index) => (
+          <Comments key={index} comment={comment} />
+        ))
+      )}
     </div>
   );
 };
