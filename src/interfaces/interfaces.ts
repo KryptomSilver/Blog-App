@@ -70,5 +70,5 @@ export interface IComment {
   content: string;
   replyCM?: IComment[];
   replyUser?: string;
-  createAt: string;
+  createdAt: string;
 }
