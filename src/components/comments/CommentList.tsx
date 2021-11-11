@@ -15,7 +15,7 @@ const CommentList: React.FC<IProps> = ({ comment }) => {
         />
         <div className="d-flex justify-content-between p-2">
           <small style={{ cursor: "pointer" }}>- Replay -</small>
-          <small>{new Date(comment.createAt).toLocaleString()}</small>
+          <small>{new Date(comment.createdAt).toLocaleString()}</small>
         </div>
       </div>
     </div>
